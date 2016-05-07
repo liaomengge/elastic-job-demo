@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="elastic-job-console:war">
+    <output-path>$PROJECT_DIR$/../elastic-job/elastic-job-console/target</output-path>
+    <root id="archive" name="elastic-job-console-1.0.7-SNAPSHOT.war">
+      <element id="artifact" artifact-name="elastic-job-console:war exploded" />
+    </root>
+  </artifact>
+</component>
