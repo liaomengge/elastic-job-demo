@@ -22,6 +22,7 @@ import com.dangdang.ddframe.job.plugin.job.type.simple.AbstractSimpleElasticJob;
 import com.sh.lmg.json.fastjson.FastJsonUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -29,6 +30,8 @@ public class SimpleJobDemo extends AbstractSimpleElasticJob {
 
     @Override
     public void process(final JobExecutionMultipleShardingContext context) {
+
+        List<Integer> shardingItems = context.getShardingItems();
         try {
             TimeUnit.SECONDS.sleep(15);
         } catch (InterruptedException e) {
