@@ -24,14 +24,14 @@
               regCenter="regCenter" shardingTotalCount="${simpleJob.shardingTotalCount}" cron="${simpleJob.cron}"
               shardingItemParameters="${simpleJob.shardingItemParameters}"/>
 
-    <job:bean id="throughputDataFlowJob" class="com.sh.lmg.job.ThroughputDataFlowJobDemo"
-              regCenter="regCenter" shardingTotalCount="${throughputDataFlowJob.shardingTotalCount}"
-              cron="${throughputDataFlowJob.cron}"
-              shardingItemParameters="${throughputDataFlowJob.shardingItemParameters}"/>
+    <!--<job:bean id="throughputDataFlowJob" class="com.sh.lmg.job.ThroughputDataFlowJobDemo"-->
+    <!--regCenter="regCenter" shardingTotalCount="${throughputDataFlowJob.shardingTotalCount}"-->
+    <!--cron="${throughputDataFlowJob.cron}"-->
+    <!--shardingItemParameters="${throughputDataFlowJob.shardingItemParameters}"/>-->
 
-    <job:bean id="sequenceDataFlowJob" class="com.sh.lmg.job.SequenceDataFlowJobDemo"
-              regCenter="regCenter" shardingTotalCount="${sequenceDataFlowJob.shardingTotalCount}"
-              cron="${sequenceDataFlowJob.cron}"
-              shardingItemParameters="${sequenceDataFlowJob.shardingItemParameters}"/>
+    <!--<job:bean id="sequenceDataFlowJob" class="com.sh.lmg.job.SequenceDataFlowJobDemo"-->
+    <!--regCenter="regCenter" shardingTotalCount="${sequenceDataFlowJob.shardingTotalCount}"-->
+    <!--cron="${sequenceDataFlowJob.cron}"-->
+    <!--shardingItemParameters="${sequenceDataFlowJob.shardingItemParameters}"/>-->
 
 </beans>

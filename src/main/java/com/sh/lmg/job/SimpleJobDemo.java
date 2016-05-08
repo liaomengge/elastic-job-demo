@@ -1,46 +1,77 @@
-/*
- * Copyright 1999-2015 dangdang.com.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * </p>
- */
-
 package com.sh.lmg.job;
 
 import com.dangdang.ddframe.job.api.JobExecutionMultipleShardingContext;
 import com.dangdang.ddframe.job.plugin.job.type.simple.AbstractSimpleElasticJob;
 import com.sh.lmg.json.fastjson.FastJsonUtil;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class SimpleJobDemo extends AbstractSimpleElasticJob {
 
+    private final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private List<Person> list = new ArrayList<>();
+
     @Override
     public void process(final JobExecutionMultipleShardingContext context) {
+        initData();
 
         List<Integer> shardingItems = context.getShardingItems();
-        try {
-            TimeUnit.SECONDS.sleep(15);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        int shardingTotalCount = context.getShardingTotalCount();
+        for (Person person : list) {
+            int id = person.getId();
+            if (shardingItems.indexOf(id % shardingTotalCount) != -1) {
+                System.out.println(DateFormatUtils.format(new Date(), DATE_FORMAT) + " ---- SimpleJobDemo.process : " + "total count : " + shardingTotalCount + ", sharding items : " + FastJsonUtil.bean2Json(shardingItems)
+                        + ", json : " + FastJsonUtil.bean2Json(person));
+            }
         }
-        System.out.println("------------------------------------------华丽的睡眠线-------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------");
+    }
 
-        System.out.println("SimpleJobDemo.process : jobName[" + context.getJobName() + "] jobParamter[" + context.getJobParameter() + "] sharding items" +
-                FastJsonUtil.bean2Json(context.getShardingItems()) + "offset : " + FastJsonUtil.bean2Json(context.getOffsets()));
-        System.out.println("------------------------------------------华丽的分割线-------------------------------------");
+    private void initData() {
+        list.clear();
+        for (int i = 0; i < 10; i++) {
+            list.add(new Person(i, "lmg" + i, 20 + i));
+        }
+    }
+}
+
+class Person {
+    private int id;
+    private String name;
+    private int age;
+
+    public Person(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
